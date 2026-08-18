@@ -1,1 +1,1796 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<title>TS CRAFT | TIENDA</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+    min-height: 100vh;
+    color: white;
+    background:
+        radial-gradient(circle at 10% 10%, rgba(255,0,0,.25), transparent 30%),
+        radial-gradient(circle at 90% 20%, rgba(80,0,255,.22), transparent 30%),
+        radial-gradient(circle at 50% 100%, rgba(255,0,0,.18), transparent 35%),
+        #050711;
+    overflow-x: hidden;
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: -1;
+
+    background-image:
+        radial-gradient(circle, white 1px, transparent 1px),
+        radial-gradient(circle, white 1px, transparent 1px),
+        radial-gradient(circle, #ff3030 1px, transparent 1px);
+
+    background-size: 90px 90px, 150px 150px, 210px 210px;
+    background-position: 20px 30px, 80px 100px, 40px 160px;
+
+    opacity: .35;
+}
+
+/* =========================
+   PANTALLAS
+========================= */
+
+#homeScreen {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+}
+
+#storeScreen,
+#accountScreen,
+#paymentScreen,
+#successScreen {
+    display: none;
+}
+
+/* =========================
+   INICIO
+========================= */
+
+.home-content {
+    width: min(700px, 92%);
+}
+
+.home-badge,
+.badge {
+    display: inline-block;
+
+    padding: 8px 18px;
+
+    border-radius: 50px;
+
+    background: rgba(255,40,40,.12);
+
+    border: 1px solid rgba(255,70,70,.35);
+
+    color: #ff5555;
+
+    font-weight: bold;
+
+    margin-bottom: 25px;
+
+    box-shadow:
+        0 0 25px rgba(255,0,0,.15);
+}
+
+.home-title,
+header h1 {
+
+    font-size: clamp(45px, 9vw, 85px);
+
+    font-weight: 1000;
+
+    letter-spacing: 4px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #ff2020,
+            #ffffff,
+            #ff3030,
+            #ffffff,
+            #ff2020
+        );
+
+    background-size: 300% auto;
+
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+
+    animation: shine 5s linear infinite;
+
+    filter:
+        drop-shadow(
+            0 0 25px rgba(255,0,0,.35)
+        );
+}
+
+.home-text {
+
+    margin-top: 18px;
+
+    margin-bottom: 35px;
+
+    color: #aeb5d0;
+
+    font-size: 18px;
+}
+
+.buy-kits,
+.buy,
+.main-button {
+
+    color: white;
+
+    font-weight: 900;
+
+    cursor: pointer;
+
+    background:
+        linear-gradient(
+            135deg,
+            #ff3434,
+            #a90000
+        );
+
+    border:
+        1px solid rgba(255,255,255,.15);
+
+    box-shadow:
+        0 8px 25px rgba(255,0,0,.25);
+
+    transition: .3s;
+}
+
+.buy-kits {
+
+    padding: 18px 45px;
+
+    border-radius: 17px;
+
+    font-size: 20px;
+}
+
+.buy-kits:hover,
+.buy:hover,
+.main-button:hover {
+
+    transform: translateY(-3px);
+
+    box-shadow:
+        0 12px 35px rgba(255,0,0,.4);
+}
+
+@keyframes shine {
+
+    to {
+        background-position: 300% center;
+    }
+
+}
+
+/* =========================
+   BARRA
+========================= */
+
+.topbar {
+
+    width: min(1150px, 92%);
+
+    margin: 20px auto 0;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    gap: 15px;
+}
+
+.logo-mini {
+
+    font-weight: 1000;
+
+    font-size: 20px;
+
+    letter-spacing: 2px;
+}
+
+.nav-buttons {
+
+    display: flex;
+
+    gap: 10px;
+}
+
+.nav-button {
+
+    padding: 12px 17px;
+
+    border-radius: 13px;
+
+    color: white;
+
+    background:
+        rgba(255,255,255,.06);
+
+    border:
+        1px solid rgba(255,255,255,.12);
+
+    font-weight: 900;
+
+    cursor: pointer;
+
+    transition: .3s;
+}
+
+.nav-button:hover {
+
+    background:
+        rgba(255,255,255,.12);
+
+    transform:
+        translateY(-2px);
+}
+
+/* =========================
+   HEADER
+========================= */
+
+header {
+
+    text-align: center;
+
+    padding: 65px 20px 45px;
+}
+
+header p {
+
+    margin-top: 18px;
+
+    color: #aeb5d0;
+
+    font-size: 18px;
+}
+
+.separator {
+
+    width: 80%;
+
+    max-width: 800px;
+
+    height: 1px;
+
+    margin: 0 auto 40px;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(255,50,50,.6),
+            transparent
+        );
+}
+
+.kits-title {
+
+    text-align: center;
+
+    margin: 10px 0 45px;
+
+    font-size: 42px;
+}
+
+.kits-title span {
+
+    color: #ff3030;
+
+    text-shadow:
+        0 0 20px rgba(255,0,0,.5);
+}
+
+/* =========================
+   TIENDA
+========================= */
+
+.shop {
+
+    width: min(1150px, 92%);
+
+    margin: auto;
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 30px;
+
+    padding-bottom: 80px;
+}
+
+.card,
+.account-card,
+.purchase-card {
+
+    position: relative;
+
+    padding: 30px;
+
+    border-radius: 28px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.08),
+            rgba(255,255,255,.025)
+        );
+
+    border:
+        1px solid rgba(255,255,255,.12);
+
+    backdrop-filter:
+        blur(18px);
+
+    box-shadow:
+        0 20px 60px rgba(0,0,0,.45),
+        inset 0 1px rgba(255,255,255,.08);
+
+    overflow: hidden;
+}
+
+.card {
+
+    text-align: center;
+
+    transition: .35s ease;
+}
+
+.card:hover {
+
+    transform:
+        translateY(-12px) scale(1.02);
+
+    border-color:
+        rgba(255,50,50,.65);
+
+    box-shadow:
+        0 25px 70px rgba(0,0,0,.6),
+        0 0 40px rgba(255,0,0,.15);
+}
+
+.card h2 {
+
+    position: relative;
+
+    z-index: 2;
+
+    font-size: 30px;
+
+    margin-bottom: 25px;
+
+    letter-spacing: 2px;
+}
+
+.image-box {
+
+    width: 210px;
+
+    height: 170px;
+
+    margin: auto;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    border-radius: 22px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.08),
+            rgba(255,255,255,.02)
+        );
+
+    border:
+        1px solid rgba(255,255,255,.12);
+
+    overflow: hidden;
+}
+
+.image-box img {
+
+    width: 100%;
+
+    height: 100%;
+
+    object-fit: contain;
+
+    padding: 12px;
+
+    transition: .4s;
+}
+
+.card:hover .image-box img {
+
+    transform: scale(1.1);
+}
+
+.buy {
+
+    position: relative;
+
+    display: block;
+
+    margin-top: 28px;
+
+    padding: 16px;
+
+    border-radius: 16px;
+
+    text-decoration: none;
+
+    font-size: 18px;
+}
+
+/* =========================
+   CUENTA
+========================= */
+
+#accountScreen {
+
+    width: min(900px, 92%);
+
+    margin: 40px auto 100px;
+}
+
+.account-title {
+
+    text-align: center;
+
+    margin-bottom: 30px;
+}
+
+.account-title h2 {
+
+    font-size: 42px;
+}
+
+.account-title p {
+
+    color: #aeb5d0;
+
+    margin-top: 10px;
+}
+
+.account-card {
+
+    margin-bottom: 25px;
+}
+
+.account-card h3 {
+
+    font-size: 25px;
+
+    margin-bottom: 10px;
+}
+
+.account-card p {
+
+    color: #aeb5d0;
+
+    line-height: 1.6;
+}
+
+.purchase-card {
+
+    margin-top: 18px;
+}
+
+.purchase-card h3 {
+
+    margin-bottom: 10px;
+
+    font-size: 24px;
+}
+
+.status {
+
+    display: inline-block;
+
+    margin: 8px 0 15px;
+
+    padding: 7px 13px;
+
+    border-radius: 30px;
+
+    background:
+        rgba(255,180,0,.12);
+
+    border:
+        1px solid rgba(255,180,0,.3);
+
+    color: #ffd15c;
+
+    font-weight: bold;
+}
+
+.empty-purchases {
+
+    text-align: center;
+
+    color: #8991aa;
+
+    padding: 30px;
+}
+
+/* =========================
+   PAGO
+========================= */
+
+#paymentScreen {
+
+    width: min(850px, 92%);
+
+    margin: 60px auto 100px;
+
+    text-align: center;
+}
+
+.payment-card {
+
+    padding: 45px 35px;
+
+    border-radius: 28px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.08),
+            rgba(255,255,255,.025)
+        );
+
+    border:
+        1px solid rgba(255,255,255,.12);
+
+    backdrop-filter:
+        blur(18px);
+
+    box-shadow:
+        0 20px 60px rgba(0,0,0,.45);
+}
+
+.payment-card h2 {
+
+    font-size:
+        clamp(30px, 6vw, 48px);
+
+    margin-bottom: 12px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #ff2020,
+            #ffffff,
+            #ff3030
+        );
+
+    -webkit-background-clip: text;
+
+    -webkit-text-fill-color: transparent;
+}
+
+.payment-card p {
+
+    color: #aeb5d0;
+
+    margin-bottom: 30px;
+}
+
+.payment-options {
+
+    display: grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap: 18px;
+
+    margin-bottom: 25px;
+}
+
+.payment-option {
+
+    padding: 22px 18px;
+
+    border-radius: 18px;
+
+    background:
+        rgba(255,255,255,.07);
+
+    border:
+        1px solid rgba(255,255,255,.12);
+
+    color: white;
+
+    font-size: 17px;
+
+    font-weight: 900;
+
+    cursor: pointer;
+
+    transition: .3s;
+}
+
+.payment-option:hover {
+
+    transform:
+        translateY(-3px);
+}
+
+.payment-option.selected {
+
+    border-color:
+        #ff3030;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,40,40,.20),
+            rgba(255,255,255,.04)
+        );
+
+    box-shadow:
+        0 0 25px rgba(255,0,0,.20);
+}
+
+.field {
+
+    margin-bottom: 20px;
+}
+
+.field label {
+
+    display: block;
+
+    text-align: left;
+
+    color: #aeb5d0;
+
+    font-weight: bold;
+
+    margin-bottom: 9px;
+}
+
+.field input {
+
+    width: 100%;
+
+    padding: 16px 18px;
+
+    border-radius: 15px;
+
+    border:
+        1px solid rgba(255,255,255,.12);
+
+    outline: none;
+
+    background:
+        rgba(0,0,0,.3);
+
+    color: white;
+
+    font-size: 16px;
+}
+
+.field input:focus {
+
+    border-color:
+        rgba(255,50,50,.7);
+
+    box-shadow:
+        0 0 20px rgba(255,0,0,.12);
+}
+
+.payment-actions {
+
+    display: flex;
+
+    gap: 15px;
+
+    margin-top: 25px;
+}
+
+.payment-button {
+
+    flex: 1;
+
+    padding: 16px;
+
+    border-radius: 16px;
+
+    font-size: 17px;
+
+    font-weight: 900;
+
+    cursor: pointer;
+}
+
+.back-button {
+
+    color: white;
+
+    background:
+        rgba(255,255,255,.06);
+
+    border:
+        1px solid rgba(255,255,255,.15);
+}
+
+.continue-button {
+
+    color: white;
+
+    background:
+        linear-gradient(
+            135deg,
+            #ff3434,
+            #a90000
+        );
+
+    border:
+        1px solid rgba(255,255,255,.15);
+
+    box-shadow:
+        0 8px 25px rgba(255,0,0,.25);
+}
+
+/* =========================
+   ÉXITO
+========================= */
+
+#successScreen {
+
+    min-height: 100vh;
+
+    justify-content: center;
+
+    align-items: center;
+
+    text-align: center;
+
+    padding: 25px;
+}
+
+.success-card {
+
+    width: min(650px, 92%);
+
+    padding: 50px 30px;
+
+    border-radius: 28px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.08),
+            rgba(255,255,255,.025)
+        );
+
+    border:
+        1px solid rgba(255,255,255,.12);
+
+    backdrop-filter:
+        blur(18px);
+
+    box-shadow:
+        0 20px 60px rgba(0,0,0,.45);
+}
+
+.success-icon {
+
+    font-size: 70px;
+
+    margin-bottom: 20px;
+}
+
+.success-card h2 {
+
+    font-size:
+        clamp(30px, 6vw, 48px);
+
+    margin-bottom: 15px;
+
+    color: #ff4040;
+}
+
+.success-card p {
+
+    color: #aeb5d0;
+
+    font-size: 18px;
+
+    line-height: 1.6;
+}
+
+/* =========================
+   FOOTER
+========================= */
+
+footer {
+
+    text-align: center;
+
+    padding: 30px 20px;
+
+    color: #747c98;
+
+    border-top:
+        1px solid rgba(255,255,255,.08);
+
+    background:
+        rgba(0,0,0,.2);
+}
+
+footer strong {
+
+    color: #ff3a3a;
+}
+
+/* =========================
+   MÓVIL
+========================= */
+
+@media (max-width: 850px) {
+
+    .shop {
+
+        grid-template-columns: 1fr;
+
+        max-width: 430px;
+    }
+
+    .topbar {
+
+        align-items: stretch;
+
+        flex-direction: column;
+    }
+
+    .nav-buttons {
+
+        width: 100%;
+    }
+
+    .nav-button {
+
+        flex: 1;
+    }
+
+    .payment-options {
+
+        grid-template-columns: 1fr;
+    }
+
+    .payment-actions {
+
+        flex-direction: column;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- =========================
+     INICIO
+========================= -->
+
+<section id="homeScreen">
+
+    <div class="home-content">
+
+        <div class="home-badge">
+            ⚡ TS CRAFT OFFICIAL STORE
+        </div>
+
+        <h1 class="home-title">
+            TS CRAFT
+        </h1>
+
+        <p class="home-text">
+            ⚔️ Domina El BoxPvP
+            <br>
+            🛒 Adquiere tu kit aquí.
+        </p>
+
+        <button
+            class="buy-kits"
+            onclick="showStore()">
+
+            🛒 COMPRAR KITS
+
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     TIENDA
+========================= -->
+
+<div id="storeScreen">
+
+    <div class="topbar">
+
+        <div class="logo-mini">
+            ⚔️ TS CRAFT
+        </div>
+
+        <div class="nav-buttons">
+
+            <button
+                class="nav-button"
+                onclick="showStore()">
+
+                🛒 TIENDA
+
+            </button>
+
+            <button
+                class="nav-button"
+                onclick="showAccount()">
+
+                👤 MI CUENTA
+
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <header>
+
+        <div class="badge">
+            ⚡ TS CRAFT OFFICIAL STORE
+        </div>
+
+        <h1>
+            TS CRAFT | TIENDA
+        </h1>
+
+        <p>
+            ⚔️ Domina El BoxPvP • 🛒 Adquiere tu kit aquí.
+        </p>
+
+    </header>
+
+
+    <div class="separator"></div>
+
+
+    <h2 class="kits-title">
+        🛒 <span>KITS:</span>
+    </h2>
+
+
+    <main class="shop">
+
+        <!-- WORLD -->
+
+        <div class="card">
+
+            <h2>
+                🌎 WORLD
+            </h2>
+
+            <div class="image-box">
+
+                <img
+                    src="https://upload.wikimedia.org/wikipedia/commons/9/97/The_Earth_seen_from_Apollo_17.jpg"
+                    alt="Planeta Tierra">
+
+            </div>
+
+            <a
+                href="#"
+                class="buy"
+                onclick="openPayment('WORLD'); return false;">
+
+                ADQUIRIR 🛒
+
+            </a>
+
+        </div>
+
+
+        <!-- ESPAÑA -->
+
+        <div class="card">
+
+            <h2>
+                🇪🇸 ESPAÑA
+            </h2>
+
+            <div class="image-box">
+
+                <img
+                    src="https://flagcdn.com/w640/es.png"
+                    alt="Bandera de España">
+
+            </div>
+
+            <a
+                href="#"
+                class="buy"
+                onclick="openPayment('ESPAÑA'); return false;">
+
+                ADQUIRIR 🛒
+
+            </a>
+
+        </div>
+
+
+        <!-- MÉXICO -->
+
+        <div class="card">
+
+            <h2>
+                🇲🇽 MÉXICO
+            </h2>
+
+            <div class="image-box">
+
+                <img
+                    src="https://flagcdn.com/w640/mx.png"
+                    alt="Bandera de México">
+
+            </div>
+
+            <a
+                href="#"
+                class="buy"
+                onclick="openPayment('MÉXICO'); return false;">
+
+                ADQUIRIR 🛒
+
+            </a>
+
+        </div>
+
+    </main>
+
+
+    <footer>
+
+        🌐 <strong>TS CRAFT</strong> • Tienda de Kits
+
+        <br><br>
+
+        ⚔️ ¡Gracias por apoyar el servidor!
+
+    </footer>
+
+</div>
+
+
+<!-- =========================
+     CUENTA
+========================= -->
+
+<section id="accountScreen">
+
+    <div class="topbar">
+
+        <div class="logo-mini">
+            ⚔️ TS CRAFT
+        </div>
+
+        <div class="nav-buttons">
+
+            <button
+                class="nav-button"
+                onclick="showStore()">
+
+                🛒 TIENDA
+
+            </button>
+
+            <button
+                class="nav-button"
+                onclick="showAccount()">
+
+                👤 MI CUENTA
+
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <div class="account-title">
+
+        <div class="badge">
+            👤 TS CRAFT ACCOUNT
+        </div>
+
+        <h2>
+            MI CUENTA
+        </h2>
+
+        <p>
+            Aquí aparecerán tus compras y su estado.
+        </p>
+
+    </div>
+
+
+    <div class="account-card">
+
+        <h3>
+            👤 Tu perfil
+        </h3>
+
+        <p>
+            Sistema de cuenta próximamente.
+        </p>
+
+    </div>
+
+
+    <div class="account-card">
+
+        <h3>
+            🛒 Mis compras
+        </h3>
+
+        <div id="purchaseList">
+
+            <div class="empty-purchases">
+                Todavía no hay compras registradas.
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     PAGO
+========================= -->
+
+<section id="paymentScreen">
+
+    <div class="payment-card">
+
+        <h2>
+            💳 FORMA DE PAGO
+        </h2>
+
+        <p id="selectedKit">
+            Selecciona cómo deseas realizar tu compra.
+        </p>
+
+
+        <div class="payment-options">
+
+            <button
+                type="button"
+                class="payment-option"
+                onclick="selectPayment(this)">
+
+                🧰 KITS DE OTROS BOXPVP
+
+            </button>
+
+
+            <button
+                type="button"
+                class="payment-option"
+                onclick="selectPayment(this)">
+
+                💳 TARJETA (PLATA)
+
+            </button>
+
+        </div>
+
+
+        <div class="field">
+
+            <label for="minecraft">
+                ⛏️ Tu usuario de Minecraft
+            </label>
+
+            <input
+                type="text"
+                id="minecraft"
+                placeholder="Ej: Thiago123"
+                maxlength="50">
+
+        </div>
+
+
+        <div class="field">
+
+            <label for="discord">
+                💬 Tu usuario de Discord
+            </label>
+
+            <input
+                type="text"
+                id="discord"
+                placeholder="Ej: thiagox._0"
+                maxlength="100">
+
+        </div>
+
+
+        <div class="field">
+
+            <label for="otherPayment">
+                ❓ ¿Otro método de pago?
+            </label>
+
+            <input
+                type="text"
+                id="otherPayment"
+                placeholder="Escribe otro método de pago...">
+
+        </div>
+
+
+        <div class="payment-actions">
+
+            <button
+                type="button"
+                class="payment-button back-button"
+                onclick="goBack()">
+
+                🔙 Regresar
+
+            </button>
+
+
+            <button
+                type="button"
+                class="payment-button continue-button"
+                onclick="continuePayment()">
+
+                Continuar ➜
+
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     ÉXITO
+========================= -->
+
+<section id="successScreen">
+
+    <div class="success-card">
+
+        <div class="success-icon">
+            📩
+        </div>
+
+        <h2>
+            SOLICITUD REGISTRADA
+        </h2>
+
+        <p>
+
+            Tu solicitud de compra fue registrada.
+
+            <br><br>
+
+            📩 <strong>
+                Envíale un mensaje a
+                <span style="color:#ff4040;">
+                    thiagox._0
+                </span>
+                por Discord + la prueba de compra.
+            </strong>
+
+            <br><br>
+
+            Cuando comprobemos el pago,
+            tu compra será actualizada en
+            <strong>👤 Mi Cuenta</strong>.
+
+        </p>
+
+    </div>
+
+</section>
+
+
+<script>
+
+let selectedKit = "";
+
+
+/* =========================
+   OCULTAR TODO
+========================= */
+
+function hideAll() {
+
+    document.getElementById("homeScreen").style.display = "none";
+
+    document.getElementById("storeScreen").style.display = "none";
+
+    document.getElementById("accountScreen").style.display = "none";
+
+    document.getElementById("paymentScreen").style.display = "none";
+
+    document.getElementById("successScreen").style.display = "none";
+
+}
+
+
+/* =========================
+   TIENDA
+========================= */
+
+function showStore() {
+
+    hideAll();
+
+    document.getElementById("storeScreen").style.display = "block";
+
+    window.scrollTo(0, 0);
+
+}
+
+
+/* =========================
+   CUENTA
+========================= */
+
+function showAccount() {
+
+    hideAll();
+
+    document.getElementById("accountScreen").style.display = "block";
+
+    loadPurchases();
+
+    window.scrollTo(0, 0);
+
+}
+
+
+/* =========================
+   ABRIR PAGO
+========================= */
+
+function openPayment(kit) {
+
+    selectedKit = kit;
+
+    hideAll();
+
+    document.getElementById("paymentScreen").style.display = "block";
+
+    document.getElementById("selectedKit").textContent =
+        "Estás adquiriendo el kit " +
+        kit +
+        ". Selecciona cómo deseas realizar tu compra.";
+
+    /* Limpiar selección anterior */
+
+    document
+        .querySelectorAll(".payment-option")
+        .forEach(option => {
+            option.classList.remove("selected");
+        });
+
+    window.scrollTo(0, 0);
+
+}
+
+
+/* =========================
+   SELECCIONAR MÉTODO
+========================= */
+
+function selectPayment(button) {
+
+    document
+        .querySelectorAll(".payment-option")
+        .forEach(option => {
+            option.classList.remove("selected");
+        });
+
+    button.classList.add("selected");
+
+}
+
+
+/* =========================
+   REGRESAR
+========================= */
+
+function goBack() {
+
+    showStore();
+
+}
+
+
+/* =========================
+   GENERAR ID DE COMPRA
+========================= */
+
+function generatePurchaseID() {
+
+    const time = Date.now();
+
+    const random =
+        Math.random()
+        .toString(36)
+        .substring(2, 10)
+        .toUpperCase();
+
+    return "TS-" + time + "-" + random;
+
+}
+
+
+/* =========================
+   CONTINUAR COMPRA
+========================= */
+
+function continuePayment() {
+
+    const selectedPayment =
+        document.querySelector(".payment-option.selected");
+
+    const minecraft =
+        document.getElementById("minecraft")
+        .value
+        .trim();
+
+    const discord =
+        document.getElementById("discord")
+        .value
+        .trim();
+
+    const other =
+        document.getElementById("otherPayment")
+        .value
+        .trim();
+
+
+    /* =====================
+       VALIDAR MÉTODO
+    ===================== */
+
+    if (!selectedPayment && !other) {
+
+        alert(
+            "⚠️ Selecciona una forma de pago o escribe otro método."
+        );
+
+        return;
+
+    }
+
+
+    /* =====================
+       VALIDAR MINECRAFT
+    ===================== */
+
+    if (!minecraft) {
+
+        alert(
+            "⚠️ Escribe tu usuario de Minecraft."
+        );
+
+        document
+            .getElementById("minecraft")
+            .focus();
+
+        return;
+
+    }
+
+
+    /* =====================
+       VALIDAR DISCORD
+    ===================== */
+
+    if (!discord) {
+
+        alert(
+            "⚠️ Escribe tu usuario de Discord."
+        );
+
+        document
+            .getElementById("discord")
+            .focus();
+
+        return;
+
+    }
+
+
+    /* =====================
+       MÉTODO
+    ===================== */
+
+    let paymentMethod = "";
+
+    if (selectedPayment) {
+
+        paymentMethod =
+            selectedPayment.textContent.trim();
+
+    } else {
+
+        paymentMethod = other;
+
+    }
+
+
+    /* =====================
+       CREAR COMPRA
+    ===================== */
+
+    const purchase = {
+
+        id: generatePurchaseID(),
+
+        kit: selectedKit,
+
+        minecraft: minecraft,
+
+        discord: discord,
+
+        payment: paymentMethod,
+
+        status: "PENDIENTE",
+
+        key: null,
+
+        createdAt: new Date().toLocaleString("es-EC")
+
+    };
+
+
+    /* =====================
+       GUARDAR COMPRA
+    ===================== */
+
+    let purchases =
+        JSON.parse(
+            localStorage.getItem("tscraft_purchases") || "[]"
+        );
+
+
+    purchases.push(purchase);
+
+
+    localStorage.setItem(
+        "tscraft_purchases",
+        JSON.stringify(purchases)
+    );
+
+
+    /* =====================
+       MOSTRAR RESULTADO
+    ===================== */
+
+    hideAll();
+
+    document
+        .getElementById("successScreen")
+        .style.display = "flex";
+
+
+    window.scrollTo(0, 0);
+
+
+    console.log(
+        "Nueva compra:",
+        purchase
+    );
+
+}
+
+
+/* =========================
+   CARGAR COMPRAS
+========================= */
+
+function loadPurchases() {
+
+    const list =
+        document.getElementById("purchaseList");
+
+
+    let purchases =
+        JSON.parse(
+            localStorage.getItem("tscraft_purchases") || "[]"
+        );
+
+
+    if (purchases.length === 0) {
+
+        list.innerHTML = `
+            <div class="empty-purchases">
+                Todavía no hay compras registradas.
+            </div>
+        `;
+
+        return;
+
+    }
+
+
+    list.innerHTML = "";
+
+
+    purchases
+        .slice()
+        .reverse()
+        .forEach(purchase => {
+
+            const card =
+                document.createElement("div");
+
+            card.className = "purchase-card";
+
+
+            let statusClass =
+                purchase.status === "ENTREGADA"
+                    ? "entregada"
+                    : "pendiente";
+
+
+            card.innerHTML = `
+
+                <h3>
+                    🛒 ${escapeHTML(purchase.kit)}
+                </h3>
+
+                <span
+                    class="status ${statusClass}">
+                    ${
+                        purchase.status === "ENTREGADA"
+                        ? "✅ ENTREGADA"
+                        : "🟡 PENDIENTE"
+                    }
+                </span>
+
+                <p>
+                    🆔 Compra:
+                    <strong>
+                        ${escapeHTML(purchase.id)}
+                    </strong>
+                </p>
+
+                <p>
+                    ⛏️ Minecraft:
+                    ${escapeHTML(purchase.minecraft)}
+                </p>
+
+                <p>
+                    📅 Fecha:
+                    ${escapeHTML(purchase.createdAt)}
+                </p>
+
+                ${
+                    purchase.status === "ENTREGADA"
+                    ?
+                    `
+                    <div style="
+                        margin-top:18px;
+                        padding:15px;
+                        border-radius:15px;
+                        background:rgba(0,255,100,.08);
+                        border:1px solid rgba(0,255,100,.2);
+                    ">
+
+                        🔑 <strong>KEY:</strong>
+
+                        <br><br>
+
+                        <code style="
+                            word-break:break-all;
+                            color:#7dff9b;
+                        ">
+                            ${escapeHTML(purchase.key || "SIN KEY")}
+                        </code>
+
+                    </div>
+                    `
+                    :
+                    `
+                    <p style="
+                        margin-top:10px;
+                        color:#ffd15c;
+                    ">
+                        ⏳ Tu compra está siendo comprobada.
+                    </p>
+                    `
+                }
+
+            `;
+
+
+            list.appendChild(card);
+
+        });
+
+}
+
+
+/* =========================
+   SEGURIDAD HTML
+========================= */
+
+function escapeHTML(text) {
+
+    return String(text)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+
+}
+
+
+/* =========================
+   INICIO
+========================= */
+
+hideAll();
+
+document
+    .getElementById("homeScreen")
+    .style.display = "flex";
+
+</script>
+
+</body>
+</html>
